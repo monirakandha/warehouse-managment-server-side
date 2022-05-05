@@ -14,13 +14,14 @@ async function run () {
 try{
     await client.connect();
     const bookCollection = client.db('bookManagement').collection('collection');
-    app.get('/books' , async(req, res) => {
+    app.get('/book' , async(req, res) => {
         const query = {};
         const cursor = bookCollection.find(query);
         const books = await cursor.toArray();
         res.send(books);
 
-    } )
+    } );
+    app.get('/book')
 
 
 }
