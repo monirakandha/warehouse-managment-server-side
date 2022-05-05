@@ -10,12 +10,25 @@ const app = express();
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.vpx0e.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  console.log("Book Service DB Connected");
-  // perform actions on the collection object
-  client.close();
-});
+async function run () {
+try{
+    await client.connect();
+    const bookCollection = client.db('bookManagement').collection('collection');
+    app.get('/books' , async(req, res) => {
+        const query = {};
+        const cursor = bookCollection.find(query);
+        const books = await cursor.toArray();
+        res.send(books);
+
+    } )
+
+
+}
+finally{
+
+}
+}
+run().catch(console.dir);
 
 //middle ware
 app.use(cors());
