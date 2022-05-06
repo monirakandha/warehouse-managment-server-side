@@ -32,16 +32,24 @@ try{
 //post
 
 app.post("/book", async (req, res) => {
-    const newCar = req.body;
-    if (!newCar.name || !newCar.img) {
+    const newBoook = req.body;
+    if (!newBoook.name || !newBoook.img) {
       return res.send({
         succsess: false,
         error: "Plase provide all information",
       });
     }
-    const result = await bookCollection.insertOne(newCar);
+    const result = await bookCollection.insertOne(newBoook);
     res.send(result);
   });
+  //delete
+  app.delete('/book/:id', async(req, res) =>{
+    const id = req.params.id;
+    const query = {_id: ObjectId(id)};
+    const result = await bookCollection.deleteOne(query);
+    res.send(result);
+});
+
 
 
 }
