@@ -14,20 +14,28 @@ async function run () {
 try{
     await client.connect();
     const bookCollection = client.db('bookManagement').collection('collection');
-    app.get('/books' , async(req, res) => {
+    app.get('/book' , async(req, res) => {
         const query = {};
         const cursor = bookCollection.find(query);
         const books = await cursor.toArray();
         res.send(books);
 
     } );
-    app.get('/books/:id', async(req, res) =>{
+    app.get('/book/:id', async(req, res) =>{
         const id = req.params.id;
         const query={_id: ObjectId(id)};
         const books = await bookCollection.findOne(query);
         res.send(books);
 
     });
+
+//post
+
+app.post('/book' , async(res, res) => {
+    const newBook = req.body;
+    const result = await bookCollection.insertOne(newBook);
+    res.send(result);
+})
 
 
 }
