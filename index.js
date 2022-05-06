@@ -31,11 +31,17 @@ try{
 
 //post
 
-app.post('/book' , async(res, res) => {
-    const newBook = req.body;
-    const result = await bookCollection.insertOne(newBook);
+app.post("/book", async (req, res) => {
+    const newCar = req.body;
+    if (!newCar.name || !newCar.img) {
+      return res.send({
+        succsess: false,
+        error: "Plase provide all information",
+      });
+    }
+    const result = await bookCollection.insertOne(newCar);
     res.send(result);
-})
+  });
 
 
 }
