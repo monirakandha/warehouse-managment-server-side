@@ -72,19 +72,14 @@ async function run() {
       );
       res.send(result);
     });
-    // Order Collection API
-
-    app.get("/order", verifyJWT, async (req, res) => {
-      const decodedEmail = req.decoded.email;
+    // My item
+    app.get("/book", async (req, res) => {
       const email = req.query.email;
-      if (email === decodedEmail) {
-        const query = { email: email };
-        const cursor = orderCollection.find(query);
-        const orders = await cursor.toArray();
-        res.send(orders);
-      } else {
-        res.status(403).send({ message: "forbidden access" });
-      }
+      console.log(email);
+      const query = { email: email };
+      const cursor = bookCollection.find(query);
+      const items = await cursor.toArray();
+      res.send(items);
     });
   } finally {
   }
