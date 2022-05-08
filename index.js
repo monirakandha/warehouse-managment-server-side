@@ -38,7 +38,7 @@ async function run() {
       if (!newBoook.name || !newBoook.img) {
         return res.send({
           succsess: false,
-          error: "Plase provide all information",
+          error: "Please provide all information",
         });
       }
       const result = await bookCollection.insertOne(newBoook);
@@ -100,5 +100,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("listern the port", port);
+  console.log("listen the port", port);
 });
