@@ -21,6 +21,7 @@ try{
         res.send(books);
 
     } );
+    
     app.get('/book/:id', async(req, res) =>{
         const id = req.params.id;
         const query={_id: ObjectId(id)};
@@ -50,6 +51,22 @@ app.post("/book", async (req, res) => {
     res.send(result);
 });
 
+app.put('/book/:id', async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  const updateQuabtity = req.body;
+  console.log(updateQuabtity)
+  const filter = { _id: ObjectId(id) };
+
+  const options = { upsert: true };
+  const updatedDoc = {
+    $set: {
+      quantity: updateQuabtity.quantity,
+    },
+  };
+  const result = await bookCollection.updateOne(filter, updatedDoc, options);
+  res.send(result);
+});
 
 
 }
@@ -64,7 +81,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req , res) => {
-    res.send('Runnign car service server');
+    res.send('Running Book Management server');
 });
 
 app.listen( port , () => {
